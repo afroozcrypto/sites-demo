@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro';
+const unidades = [
+  ['Quarto Janela do Rio', '2 pessoas · cama de casal · casa de banho privada', 'desde 65 €/noite'],
+  ['Quarto Janela do Pátio', '2 pessoas · duas camas · casa de banho privada', 'desde 60 €/noite'],
+  ['Estúdio Janela da Serra', '4 pessoas · kitchenette · sofá-cama', 'desde 95 €/noite'],
+];
+const comodidades = ['Wi-Fi gratuito', 'Ar condicionado', 'Pequeno-almoço opcional', 'Estacionamento na rua', 'Roupa de cama e toalhas', 'Check-in autónomo'];
+---
+<Base title="Casa das Três Janelas · Alojamento local" description="Demonstração de site para alojamento local: quartos, comodidades, regras da casa e reserva direta, pensado primeiro para telemóvel." themeColor="#065f46">
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Alojamento local · Centro histórico</p>
+      <h1>Casa das Três Janelas</h1>
+      <p class="lead">Três unidades numa casa recuperada, a dois minutos a pé do rio. Reserva direta, sem comissões de plataforma.</p>
+      <div class="ctas">
+        <a class="btn btn-main" href="#reservar">Ver disponibilidade</a>
+        <a class="btn btn-alt" href="#unidades">Quartos</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="unidades">
+      <div class="wrap">
+        <h2>Quartos e estúdio</h2>
+        <div class="grid grid-3">
+          {unidades.map(([t, d, p], i) => (
+            <div class="card">
+              <div class={`ph ph${i}`} aria-hidden="true"></div>
+              <div class="body"><h3>{t}</h3><p>{d}</p><p class="price">{p}</p></div>
+            </div>
+          ))}
+        </div>
+        <p class="note">Preços ilustrativos. Taxa turística municipal não incluída.</p>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="wrap grid grid-2">
+        <div>
+          <h2>Comodidades</h2>
+          <ul class="ticks">{comodidades.map((c) => <li>{c}</li>)}</ul>
+        </div>
+        <div>
+          <h2>Regras da casa</h2>
+          <dl class="hours">
+            <dt>Check-in</dt><dd>a partir das 15h00</dd>
+            <dt>Check-out</dt><dd>até às 11h00</dd>
+            <dt>Silêncio</dt><dd>22h00–08h00</dd>
+            <dt>Animais</dt><dd>sob consulta</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="reservar">
+      <div class="wrap">
+        <h2>Reservar</h2>
+        <p>Envie as datas e o número de hóspedes. Respondemos com a disponibilidade e o valor total.</p>
+        <a class="btn btn-main" href="#reservar">Pedir reserva por email</a>
+        <p class="note">Num site real, este botão abre um email para o alojamento com as datas por preencher.</p>
+        <p>Rua do Exemplo, 7 · 4400-000 Vila Nova de Gaia <span class="note">(morada fictícia)</span></p>
+        <p class="note">Registo AL n.º 00000/AL (número de exemplo)</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">© Casa das Três Janelas · marca fictícia criada para demonstração</div></footer>
+</Base>
+
+<style>
+  :root { --c: #065f46; }
+  .hero { background: linear-gradient(160deg, #022c22, #065f46 65%, #047857); color: #fff; padding: 3.5rem 0 3rem; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; font-weight: 700; color: #a7f3d0; }
+  h1 { font-size: clamp(2.2rem, 8vw, 3.6rem); font-family: Georgia, "Times New Roman", serif; }
+  .lead { font-size: 1.15rem; max-width: 36rem; }
+  .ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .btn-main { background: #fde68a; color: #022c22; }
+  .btn-alt { border: 2px solid #fff; color: #fff; }
+  #reservar .btn-main { background: var(--c); color: #fff; }
+  h2 { color: var(--c); font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; }
+  .card { border-radius: .75rem; overflow: hidden; border: 1px solid #e5e7eb; }
+  .ph { aspect-ratio: 16 / 9; }
+  .ph0 { background: linear-gradient(135deg, #a7f3d0, #0ea5e9); }
+  .ph1 { background: linear-gradient(135deg, #fde68a, #f97316); }
+  .ph2 { background: linear-gradient(135deg, #d9f99d, #15803d); }
+  .body { padding: 1.25rem; }
+  .card h3 { font-size: 1.1rem; }
+  .price { font-weight: 800; color: var(--c); margin: 0; }
+  .alt { background: #f0fdf4; }
+  .ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
+  .ticks li::before { content: "✓ "; color: var(--c); font-weight: 800; }
+  .hours { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; margin: 0; }
+  .hours dt { font-weight: 700; } .hours dd { margin: 0; }
+  .foot { background: #022c22; color: #d1fae5; padding: 1.5rem 0; font-size: .875rem; }
+</style>

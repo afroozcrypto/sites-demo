@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+const links = [
+  ['Restaurante', 'restaurante/'],
+  ['Oficina', 'oficina/'],
+  ['Alojamento local', 'alojamento-local/'],
+  ['Oferta e preços', 'oferta/'],
+];
+---
+<Base title="Demonstrações de sites · João Conde" description="Três demonstrações de sites para negócios locais: restaurante, oficina e alojamento local.">
+  <main class="wrap">
+    <section>
+      <h1>Demonstrações de sites</h1>
+      <p>Três exemplos para negócios locais, com marcas fictícias.</p>
+      <ul>
+        {links.map(([t, h]) => <li><a href={`${base}${h}`}>{t}</a></li>)}
+      </ul>
+    </section>
+  </main>
+</Base>
+<style>
+  ul { list-style: none; padding: 0; display: grid; gap: .75rem; }
+  a { display: block; padding: 1rem 1.25rem; border: 1px solid #e5e7eb; border-radius: .6rem; font-weight: 700; text-decoration: none; }
+  a:hover { border-color: #111827; }
+</style>
