@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import LegalFooter from '../../components/LegalFooter.astro';
+import JsonLd from '../../components/JsonLd.astro';
+
+const servicos = [
+  ['Revisão e mudança de óleo', 'Óleo, filtros e verificação de 30 pontos.', 'desde 89 €'],
+  ['Travões', 'Pastilhas, discos e líquido de travões.', 'desde 65 €'],
+  ['Pneus e alinhamento', 'Montagem, calibragem e alinhamento de direção.', 'desde 25 €'],
+  ['Diagnóstico eletrónico', 'Leitura de avarias com máquina de diagnóstico.', 'desde 35 €'],
+  ['Ar condicionado', 'Carga de gás e verificação de fugas.', 'desde 55 €'],
+  ['Preparação para inspeção', 'Verificação prévia e correção de falhas.', 'desde 30 €'],
+];
+const passos = [
+  ['1', 'Pede orçamento', 'Diz a matrícula, o modelo e o problema.'],
+  ['2', 'Recebe o valor', 'Orçamento por escrito antes de qualquer trabalho.'],
+  ['3', 'Marca o dia', 'Deixa o carro de manhã, levanta ao fim do dia.'],
+];
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ld = {
+  '@type': 'AutoRepair', name: 'Auto Pistão Azul', url, telephone: '+351900000001',
+  address: { '@type': 'PostalAddress', streetAddress: 'Zona Industrial do Exemplo, Lote 3', postalCode: '4700-000', addressLocality: 'Braga', addressCountry: 'PT' },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '08:30', closes: '12:30' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '14:00', closes: '18:30' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '09:00', closes: '13:00' }],
+};
+---
+<Base title="Auto Pistão Azul · Oficina de reparação automóvel" description="Demonstração de site para oficina: serviços com preço de partida, pedido de orçamento e horário, pensado primeiro para telemóvel." themeColor="#1e3a8a">
+  <JsonLd slot="head" data={ld} />
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Mecânica geral · Todas as marcas</p>
+      <h1>Auto Pistão Azul</h1>
+      <p class="lead">Revisões, travões, pneus e diagnóstico. Orçamento por escrito antes de começar.</p>
+      <div class="ctas">
+        <a class="btn btn-main" href="#orcamento">Pedir orçamento</a>
+        <a class="btn btn-alt" href="#servicos">Ver serviços</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="servicos">
+      <div class="wrap">
+        <h2>Serviços</h2>
+        <div class="grid grid-3">
+          {servicos.map(([t, d, p]) => (
+            <div class="card"><h3>{t}</h3><p>{d}</p><p class="price">{p}</p></div>
+          ))}
+        </div>
+        <p class="note">Preços ilustrativos, com IVA. O valor final depende do modelo do veículo.</p>
+      </div>
+    </section>
+
+    <section id="orcamento" class="alt">
+      <div class="wrap">
+        <h2>Como funciona</h2>
+        <ol class="steps">
+          {passos.map(([n, t, d]) => <li><span class="n" aria-hidden="true">{n}</span><div><h3>{t}</h3><p>{d}</p></div></li>)}
+        </ol>
+        <a class="btn btn-main" href="#orcamento">Pedir orçamento por WhatsApp</a>
+        <p class="note">Num site real, este botão abre o WhatsApp da oficina com a mensagem já preenchida.</p>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="wrap grid grid-2">
+        <div>
+          <h2>Horário</h2>
+          <dl class="hours">
+            <dt>Segunda a sexta</dt><dd>08h30–12h30 · 14h00–18h30</dd>
+            <dt>Sábado</dt><dd>09h00–13h00</dd>
+            <dt>Domingo</dt><dd>Encerrado</dd>
+          </dl>
+        </div>
+        <div>
+          <h2>Contacto</h2>
+          <p>Zona Industrial do Exemplo, Lote 3 · 4700-000 Braga <span class="note">(morada fictícia)</span></p>
+          <p><strong>Telefone:</strong> +351 900 000 001 <span class="note">(número de exemplo)</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <LegalFooter marca="Auto Pistão Azul" firma="Pistão Azul Reparações Auto, Lda." morada="Zona Industrial do Exemplo, Lote 3 · 4700-000 Braga" email="oficina@exemplo.pt" bg="#0f172a" fg="#e2e8f0"
+    ral={[{ nome: "CASA, Centro de Arbitragem do Setor Automóvel", url: "https://www.arbitragemauto.pt" }, { nome: "CIAB, Tribunal Arbitral de Consumo", url: "https://www.ciab.pt" }]} />
+</Base>
+
+<style>
+  :root { --c: #1e3a8a; }
+  .hero { background: linear-gradient(150deg, #0f172a, #1e3a8a 70%); color: #fff; padding: 3.5rem 0 3rem; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; font-weight: 700; color: #bfdbfe; }
+  h1 { font-size: clamp(2.2rem, 8vw, 3.6rem); font-weight: 800; }
+  .lead { font-size: 1.15rem; max-width: 34rem; }
+  .ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .btn-main { background: #facc15; color: #0f172a; }
+  .btn-alt { border: 2px solid #fff; color: #fff; }
+  h2 { color: var(--c); font-size: 1.8rem; }
+  .card { border: 1px solid #e5e7eb; border-left: 4px solid #facc15; border-radius: .6rem; padding: 1.25rem; }
+  .card h3 { font-size: 1.1rem; }
+  .price { font-weight: 800; color: var(--c); margin: 0; }
+  .alt { background: #f1f5f9; }
+  .steps { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 1rem; }
+  .steps li { display: flex; gap: 1rem; align-items: flex-start; }
+  .steps h3 { font-size: 1.1rem; margin-bottom: .2em; }
+  .n { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--c); color: #fff; display: grid; place-items: center; font-weight: 800; }
+  .hours { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; margin: 0; }
+  .hours dt { font-weight: 700; } .hours dd { margin: 0; }
+</style>

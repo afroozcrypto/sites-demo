@@ -1,0 +1,60 @@
+---
+import DemoBar from '../components/DemoBar.astro';
+interface Props { title: string; description: string; themeColor?: string; }
+const { title, description, themeColor = '#111827' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={themeColor} />
+    <link rel="canonical" href={canonical} />
+    <slot name="head" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+  </head>
+  <body>
+    <DemoBar />
+    <slot />
+  </body>
+</html>
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 6rem; }
+  body {
+    margin: 0; padding-top: 3rem;
+    font: 400 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1f2937; background: #fff;
+  }
+  img, svg { max-width: 100%; display: block; }
+  h1, h2, h3 { line-height: 1.2; margin: 0 0 .6em; text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  p { margin: 0 0 1em; }
+  a { color: inherit; }
+  .wrap { width: min(100% - 2rem, 68rem); margin-inline: auto; }
+  section { padding: 3rem 0; }
+  .btn {
+    display: inline-block; padding: .85rem 1.3rem; border-radius: .6rem;
+    font-weight: 700; text-decoration: none; min-height: 48px;
+  }
+  .grid { display: grid; gap: 1rem; }
+  @media (min-width: 40rem) { .grid-2 { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+  .note { font-size: .875rem; opacity: .85; }
+  :focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  /* Movimento: só CSS, só abaixo da dobra, só se o browser suportar e o utilizador não pedir menos movimento. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      main section:not(:first-child) .card, main section:not(:first-child) .plan, main .steps li {
+        animation: surgir linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 60%;
+      }
+    }
+  }
+  @keyframes surgir { from { transform: translateY(1.5rem) scale(.98); } to { transform: none; } }
+</style>

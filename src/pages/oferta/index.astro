@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+const email = 'joao@cond3.tech';
+const mail = (assunto: string) => `mailto:${email}?subject=${encodeURIComponent(assunto)}`;
+const demos = [
+  ['Restaurante', 'restaurante/', 'Ementa, horário, reservas e localização.'],
+  ['Oficina', 'oficina/', 'Serviços com preço de partida e pedido de orçamento.'],
+  ['Alojamento local', 'alojamento-local/', 'Quartos, comodidades, regras da casa e reserva direta.'],
+];
+---
+<Base title="Sites para negócios locais · João Conde" description="Sites rápidos, pensados para telemóvel, para negócios locais. Uma página desde 400 € + IVA, em 7 dias úteis. Restaurante 700 € + IVA, em 10 dias úteis.">
+  <main>
+    <header class="hero">
+      <div class="wrap">
+        <h1>Um site que funciona no telemóvel do seu cliente</h1>
+        <p class="lead">Sites rápidos e simples para restaurantes, oficinas, alojamento local e outros negócios locais.</p>
+        <a class="btn btn-main" href={mail('Pedido de site')}>Pedir proposta</a>
+      </div>
+    </header>
+
+    <section id="precos">
+      <div class="wrap">
+        <h2>Preços</h2>
+        <div class="grid grid-2">
+          <div class="plan">
+            <h3>Uma página</h3>
+            <p class="amount">desde 400 € <span>+ IVA (23%)</span></p>
+            <p class="prazo">Entrega em 7 dias úteis</p>
+            <p>Página única com as secções de que o negócio precisa: o que faz, horário, contacto e localização.</p>
+            <a class="btn btn-line" href={mail('Site de uma página')}>Pedir este</a>
+          </div>
+          <div class="plan featured">
+            <h3>Restaurante</h3>
+            <p class="amount">700 € <span>+ IVA (23%)</span></p>
+            <p class="prazo">Entrega em 10 dias úteis</p>
+            <p>Site como a demonstração de restaurante: ementa, horário, reservas e localização.</p>
+            <a class="btn btn-main" href={mail('Site para restaurante')}>Pedir este</a>
+          </div>
+        </div>
+        <h3 class="inc-t">Incluído em qualquer site</h3>
+        <ul class="inc">
+          <li><strong>Rodapé legal:</strong> identificação da empresa, ligação ao Livro de Reclamações Eletrónico e entidade de resolução de litígios. São obrigatórios por lei (DL 74/2017 e Lei 144/2015).</li>
+          <li><strong>Registo AL visível</strong> em sites de alojamento local, como exige o DL 128/2014 (art. 17.º).</li>
+          <li><strong>Dados para o Google</strong> (schema.org): horário, morada e tipo de negócio em formato que o Google lê.</li>
+          <li><strong>Feito para o telemóvel:</strong> as demonstrações têm 100 em todas as categorias do Lighthouse, em modo telemóvel.</li>
+        </ul>
+        <h3 class="inc-t">Como funciona</h3>
+        <ol class="inc">
+          <li><strong>Pedido por email.</strong> Diz o tipo de negócio e o que precisa. Respondo com a proposta.</li>
+          <li><strong>50% no arranque.</strong> Envio-lhe por email ou WhatsApp um link de pagamento seguro, para cartão ou MB WAY. Fatura em cada pagamento.</li>
+          <li><strong>Textos e fotos.</strong> O prazo de entrega conta a partir do dia em que os recebo.</li>
+          <li><strong>50% na entrega.</strong> Vê o site pronto e paga o restante antes de ele ir para o ar.</li>
+        </ol>
+        <p class="note">Valores sem IVA; acresce IVA à taxa de 23%. Domínio e alojamento combinam-se por email antes de começar.</p>
+      </div>
+    </section>
+
+    <section id="demos" class="alt">
+      <div class="wrap">
+        <h2>Veja as demonstrações</h2>
+        <p>As marcas são fictícias. Servem para mostrar o resultado no seu telemóvel.</p>
+        <ul class="demos">
+          {demos.map(([t, href, d]) => (
+            <li><a href={`${base}${href}`}><strong>{t}</strong><span>{d}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="wrap">
+        <h2>Contacto</h2>
+        <p>Diga o tipo de negócio e o que precisa. Respondo por email.</p>
+        <p><a class="email" href={mail('Pedido de site')}>{email}</a></p>
+      </div>
+    </section>
+  </main>
+  <footer class="foot"><div class="wrap">João Conde · <a href={mail('Pedido de site')}>{email}</a></div></footer>
+</Base>
+
+<style>
+  .hero { background: #111827; color: #fff; padding: 3.5rem 0 3rem; }
+  h1 { font-size: clamp(2rem, 7vw, 3.2rem); max-width: 40rem; }
+  .lead { font-size: 1.15rem; max-width: 34rem; }
+  .btn-main { background: #fde68a; color: #111827; }
+  .btn-line { border: 2px solid #111827; color: #111827; }
+  h2 { font-size: 1.8rem; }
+  .plan { border: 1px solid #e5e7eb; border-radius: .8rem; padding: 1.5rem; }
+  .plan.featured { border: 2px solid #111827; }
+  .plan .btn-main { background: #111827; color: #fff; }
+  .amount { font-size: 2rem; font-weight: 800; margin: 0 0 .5rem; }
+  .prazo { font-weight: 700; margin: 0 0 .75rem; }
+  .amount span { font-size: 1rem; font-weight: 600; color: #4b5563; }
+  .inc-t { margin-top: 2rem; }
+  .inc { padding-left: 1.2rem; margin: 0 0 1rem; display: grid; gap: .5rem; }
+  .alt { background: #f9fafb; }
+  .demos { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
+  .demos a { display: flex; flex-direction: column; gap: .2rem; padding: 1rem 1.25rem; background: #fff; border: 1px solid #e5e7eb; border-radius: .6rem; text-decoration: none; }
+  .demos a:hover { border-color: #111827; }
+  .demos span { color: #4b5563; }
+  .email { font-size: 1.25rem; font-weight: 700; }
+  .foot { background: #111827; color: #e5e7eb; padding: 1.5rem 0; font-size: .875rem; }
+</style>

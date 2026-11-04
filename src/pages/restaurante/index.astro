@@ -1,0 +1,129 @@
+---
+import Base from '../../layouts/Base.astro';
+import LegalFooter from '../../components/LegalFooter.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import '@fontsource-variable/fraunces';
+
+const ementa = [
+  { cat: 'Entradas', itens: [
+    ['Pão da casa, azeite e azeitonas', '3,50 €'],
+    ['Pataniscas de bacalhau (4 un.)', '6,50 €'],
+    ['Queijo da serra amanteigado', '9,00 €'],
+  ]},
+  { cat: 'Pratos', itens: [
+    ['Bacalhau à Brás', '14,50 €'],
+    ['Polvo à lagareiro', '19,00 €'],
+    ['Secretos de porco preto na brasa', '15,50 €'],
+    ['Arroz de legumes da época (vegetariano)', '12,00 €'],
+  ]},
+  { cat: 'Sobremesas', itens: [
+    ['Arroz doce', '4,00 €'],
+    ['Pudim abade de Priscos', '4,50 €'],
+  ]},
+];
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ld = {
+  '@type': 'Restaurant', name: 'Taberna Sal & Brasa', url, menu: url + '#ementa',
+  servesCuisine: 'Portuguesa', priceRange: '€€', telephone: '+351900000000',
+  address: { '@type': 'PostalAddress', streetAddress: 'Rua do Exemplo, 12', postalCode: '4000-000', addressLocality: 'Porto', addressCountry: 'PT' },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '12:00', closes: '15:00' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '19:00', closes: '22:30' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '12:00', closes: '15:30' }],
+};
+---
+<Base title="Taberna Sal & Brasa · Cozinha portuguesa na brasa" description="Demonstração de site para restaurante: ementa, horário, reservas e localização, pensado primeiro para telemóvel." themeColor="#7c2d12">
+  <JsonLd slot="head" data={ld} />
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Cozinha portuguesa · Brasa de carvão</p>
+      <h1>Taberna Sal &amp; Brasa</h1>
+      <p class="lead">Peixe e carne na brasa, petiscos e vinho a copo. Almoço e jantar.</p>
+      <div class="ctas">
+        <a class="btn btn-main" href="#reservas">Reservar mesa</a>
+        <a class="btn btn-alt" href="#ementa">Ver ementa</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="subnav" aria-label="Secções">
+    <div class="wrap"><a href="#ementa">Ementa</a><a href="#horario">Horário</a><a href="#reservas">Reservas</a><a href="#onde">Onde estamos</a></div>
+  </nav>
+
+  <main>
+    <section id="ementa">
+      <div class="wrap">
+        <h2>Ementa</h2>
+        <div class="grid grid-3">
+          {ementa.map((g) => (
+            <div class="card">
+              <h3>{g.cat}</h3>
+              <ul class="menu">
+                {g.itens.map(([n, p]) => <li><span>{n}</span><span class="price">{p}</span></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p class="note">Preços ilustrativos. Informação sobre alergénios disponível no restaurante.</p>
+      </div>
+    </section>
+
+    <section id="horario" class="alt">
+      <div class="wrap grid grid-2">
+        <div>
+          <h2>Horário</h2>
+          <dl class="hours">
+            <dt>Terça a sábado</dt><dd>12h00–15h00 · 19h00–22h30</dd>
+            <dt>Domingo</dt><dd>12h00–15h30</dd>
+            <dt>Segunda</dt><dd>Encerrado</dd>
+          </dl>
+        </div>
+        <div>
+          <h2>Prato do dia</h2>
+          <p>De terça a sexta, ao almoço: prato, bebida e café a preço fixo. A sugestão muda todos os dias.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reservas">
+      <div class="wrap">
+        <h2>Reservas</h2>
+        <p>Reserve por telefone ou WhatsApp. Grupos acima de 8 pessoas, ligue com antecedência.</p>
+        <p><strong>Telefone:</strong> +351 900 000 000 <span class="note">(número de exemplo)</span></p>
+        <a class="btn btn-main" href="#reservas">Reservar por WhatsApp</a>
+        <p class="note">Num site real, este botão abre a conversa no WhatsApp do restaurante.</p>
+      </div>
+    </section>
+
+    <section id="onde" class="alt">
+      <div class="wrap">
+        <h2>Onde estamos</h2>
+        <p>Rua do Exemplo, 12 · 4000-000 Porto <span class="note">(morada fictícia)</span></p>
+        <p>Estacionamento público a 200 m. Acesso para cadeira de rodas.</p>
+      </div>
+    </section>
+  </main>
+
+  <LegalFooter marca="Taberna Sal & Brasa" firma="Sal e Brasa Restauração, Lda." morada="Rua do Exemplo, 12 · 4000-000 Porto" email="reservas@exemplo.pt" bg="#1c1917" fg="#f5f5f4"
+    ral={[{ nome: "CICAP, Centro de Informação de Consumo e Arbitragem do Porto", url: "https://www.cicap.pt" }]} />
+</Base>
+
+<style>
+  :root { --c: #7c2d12; --c2: #fff7ed; }
+  .hero { background: linear-gradient(160deg, #431407, #7c2d12 60%, #9a3412); color: #fff; padding: 3.5rem 0 3rem; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; font-weight: 700; color: #fed7aa; }
+  h1 { font-size: clamp(2.2rem, 8vw, 3.6rem); font-family: "Fraunces Variable", Georgia, serif; font-optical-sizing: auto; }
+  .lead { font-size: 1.15rem; max-width: 34rem; }
+  .ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .btn-main { background: #fde68a; color: #431407; }
+  .btn-alt { border: 2px solid #fff; color: #fff; }
+  #reservas .btn-main { background: var(--c); color: #fff; }
+  .subnav { position: sticky; top: 3rem; background: #fff; border-bottom: 1px solid #e5e7eb; z-index: 10; overflow-x: auto; }
+  .subnav .wrap { display: flex; gap: .25rem; }
+  .subnav a { padding: .8rem .7rem; text-decoration: none; font-weight: 600; white-space: nowrap; color: var(--c); }
+  h2 { color: var(--c); font-family: "Fraunces Variable", Georgia, serif; font-optical-sizing: auto; font-size: 1.8rem; }
+  .card { background: var(--c2); border-radius: .75rem; padding: 1.25rem; }
+  .menu { list-style: none; margin: 0; padding: 0; }
+  .menu li { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem 0; border-bottom: 1px dashed #fdba74; }
+  .price { font-weight: 700; white-space: nowrap; }
+  .alt { background: #fafaf9; }
+  .hours { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; margin: 0; }
+  .hours dt { font-weight: 700; } .hours dd { margin: 0; }
+</style>
