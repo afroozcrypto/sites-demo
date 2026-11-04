@@ -31,7 +31,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     color: #1f2937; background: #fff;
   }
   img, svg { max-width: 100%; display: block; }
-  h1, h2, h3 { line-height: 1.2; margin: 0 0 .6em; }
+  h1, h2, h3 { line-height: 1.2; margin: 0 0 .6em; text-wrap: balance; }
+  p, li { text-wrap: pretty; }
   p { margin: 0 0 1em; }
   a { color: inherit; }
   .wrap { width: min(100% - 2rem, 68rem); margin-inline: auto; }
@@ -45,4 +46,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   .note { font-size: .875rem; opacity: .85; }
   :focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  /* Movimento: só CSS, só abaixo da dobra, só se o browser suportar e o utilizador não pedir menos movimento. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      main section:not(:first-child) .card, main section:not(:first-child) .plan, main .steps li {
+        animation: surgir linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 60%;
+      }
+    }
+  }
+  @keyframes surgir { from { transform: translateY(1.5rem) scale(.98); } to { transform: none; } }
 </style>
