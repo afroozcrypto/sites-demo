@@ -36,6 +36,13 @@ const demos = [
             <a class="btn btn-main" href={mail('Site para restaurante')}>Pedir este</a>
           </div>
         </div>
+        <h3 class="inc-t">Incluído em qualquer site</h3>
+        <ul class="inc">
+          <li><strong>Rodapé legal:</strong> identificação da empresa, ligação ao Livro de Reclamações Eletrónico e entidade de resolução de litígios. São obrigatórios por lei (DL 74/2017 e Lei 144/2015).</li>
+          <li><strong>Registo AL visível</strong> em sites de alojamento local, como exige o DL 128/2014 (art. 17.º).</li>
+          <li><strong>Dados para o Google</strong> (schema.org): horário, morada e tipo de negócio em formato que o Google lê.</li>
+          <li><strong>Feito para o telemóvel:</strong> as demonstrações têm 100 em todas as categorias do Lighthouse, em modo telemóvel.</li>
+        </ul>
         <p class="note">Valores sem IVA. Prazos, domínio e alojamento combinam-se por email antes de começar.</p>
       </div>
     </section>
@@ -75,6 +82,8 @@ const demos = [
   .plan .btn-main { background: #111827; color: #fff; }
   .amount { font-size: 2rem; font-weight: 800; margin: 0 0 .5rem; }
   .amount span { font-size: 1rem; font-weight: 600; color: #4b5563; }
+  .inc-t { margin-top: 2rem; }
+  .inc { padding-left: 1.2rem; margin: 0 0 1rem; display: grid; gap: .5rem; }
   .alt { background: #f9fafb; }
   .demos { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
   .demos a { display: flex; flex-direction: column; gap: .2rem; padding: 1rem 1.25rem; background: #fff; border: 1px solid #e5e7eb; border-radius: .6rem; text-decoration: none; }

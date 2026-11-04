@@ -1,5 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
+import LegalFooter from '../../components/LegalFooter.astro';
+import JsonLd from '../../components/JsonLd.astro';
+
 const ementa = [
   { cat: 'Entradas', itens: [
     ['Pão da casa, azeite e azeitonas', '3,50 €'],
@@ -17,8 +20,16 @@ const ementa = [
     ['Pudim abade de Priscos', '4,50 €'],
   ]},
 ];
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ld = {
+  '@type': 'Restaurant', name: 'Taberna Sal & Brasa', url, menu: url + '#ementa',
+  servesCuisine: 'Portuguesa', priceRange: '€€', telephone: '+351900000000',
+  address: { '@type': 'PostalAddress', streetAddress: 'Rua do Exemplo, 12', postalCode: '4000-000', addressLocality: 'Porto', addressCountry: 'PT' },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '12:00', closes: '15:00' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '19:00', closes: '22:30' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '12:00', closes: '15:30' }],
+};
 ---
 <Base title="Taberna Sal & Brasa · Cozinha portuguesa na brasa" description="Demonstração de site para restaurante: ementa, horário, reservas e localização, pensado primeiro para telemóvel." themeColor="#7c2d12">
+  <JsonLd slot="head" data={ld} />
   <header class="hero">
     <div class="wrap">
       <p class="eyebrow">Cozinha portuguesa · Brasa de carvão</p>
@@ -89,7 +100,8 @@ const ementa = [
     </section>
   </main>
 
-  <footer class="foot"><div class="wrap">© Taberna Sal &amp; Brasa · marca fictícia criada para demonstração</div></footer>
+  <LegalFooter marca="Taberna Sal & Brasa" firma="Sal e Brasa Restauração, Lda." morada="Rua do Exemplo, 12 · 4000-000 Porto" email="reservas@exemplo.pt" bg="#1c1917" fg="#f5f5f4"
+    ral={[{ nome: "CICAP, Centro de Informação de Consumo e Arbitragem do Porto", url: "https://www.cicap.pt" }]} />
 </Base>
 
 <style>
@@ -113,5 +125,4 @@ const ementa = [
   .alt { background: #fafaf9; }
   .hours { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; margin: 0; }
   .hours dt { font-weight: 700; } .hours dd { margin: 0; }
-  .foot { background: #1c1917; color: #e7e5e4; padding: 1.5rem 0; font-size: .875rem; }
 </style>

@@ -1,13 +1,24 @@
 ---
 import Base from '../../layouts/Base.astro';
+import LegalFooter from '../../components/LegalFooter.astro';
+import JsonLd from '../../components/JsonLd.astro';
+
 const unidades = [
   ['Quarto Janela do Rio', '2 pessoas · cama de casal · casa de banho privada', 'desde 65 €/noite'],
   ['Quarto Janela do Pátio', '2 pessoas · duas camas · casa de banho privada', 'desde 60 €/noite'],
   ['Estúdio Janela da Serra', '4 pessoas · kitchenette · sofá-cama', 'desde 95 €/noite'],
 ];
 const comodidades = ['Wi-Fi gratuito', 'Ar condicionado', 'Pequeno-almoço opcional', 'Estacionamento na rua', 'Roupa de cama e toalhas', 'Check-in autónomo'];
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ld = {
+  '@type': 'BedAndBreakfast', name: 'Casa das Três Janelas', url,
+  checkinTime: '15:00', checkoutTime: '11:00', petsAllowed: 'Sob consulta',
+  amenityFeature: ['Wi-Fi gratuito', 'Ar condicionado'].map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+  address: { '@type': 'PostalAddress', streetAddress: 'Rua do Exemplo, 7', postalCode: '4400-000', addressLocality: 'Vila Nova de Gaia', addressCountry: 'PT' },
+};
 ---
 <Base title="Casa das Três Janelas · Alojamento local" description="Demonstração de site para alojamento local: quartos, comodidades, regras da casa e reserva direta, pensado primeiro para telemóvel." themeColor="#065f46">
+  <JsonLd slot="head" data={ld} />
   <header class="hero">
     <div class="wrap">
       <p class="eyebrow">Alojamento local · Centro histórico</p>
@@ -61,12 +72,12 @@ const comodidades = ['Wi-Fi gratuito', 'Ar condicionado', 'Pequeno-almoço opcio
         <a class="btn btn-main" href="#reservar">Pedir reserva por email</a>
         <p class="note">Num site real, este botão abre um email para o alojamento com as datas por preencher.</p>
         <p>Rua do Exemplo, 7 · 4400-000 Vila Nova de Gaia <span class="note">(morada fictícia)</span></p>
-        <p class="note">Registo AL n.º 00000/AL (número de exemplo)</p>
       </div>
     </section>
   </main>
 
-  <footer class="foot"><div class="wrap">© Casa das Três Janelas · marca fictícia criada para demonstração</div></footer>
+  <LegalFooter marca="Casa das Três Janelas" firma="Três Janelas Alojamento, Unipessoal Lda." morada="Rua do Exemplo, 7 · 4400-000 Vila Nova de Gaia" email="reservas@exemplo.pt" extra="Alojamento local · Registo n.º 00000/AL (exemplo)" bg="#022c22" fg="#d1fae5"
+    ral={[{ nome: "CICAP, Centro de Informação de Consumo e Arbitragem do Porto", url: "https://www.cicap.pt" }]} />
 </Base>
 
 <style>
@@ -93,5 +104,4 @@ const comodidades = ['Wi-Fi gratuito', 'Ar condicionado', 'Pequeno-almoço opcio
   .ticks li::before { content: "✓ "; color: var(--c); font-weight: 800; }
   .hours { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; margin: 0; }
   .hours dt { font-weight: 700; } .hours dd { margin: 0; }
-  .foot { background: #022c22; color: #d1fae5; padding: 1.5rem 0; font-size: .875rem; }
 </style>

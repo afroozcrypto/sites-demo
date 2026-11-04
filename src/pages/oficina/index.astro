@@ -1,5 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
+import LegalFooter from '../../components/LegalFooter.astro';
+import JsonLd from '../../components/JsonLd.astro';
+
 const servicos = [
   ['Revisão e mudança de óleo', 'Óleo, filtros e verificação de 30 pontos.', 'desde 89 €'],
   ['Travões', 'Pastilhas, discos e líquido de travões.', 'desde 65 €'],
@@ -13,8 +16,15 @@ const passos = [
   ['2', 'Recebe o valor', 'Orçamento por escrito antes de qualquer trabalho.'],
   ['3', 'Marca o dia', 'Deixa o carro de manhã, levanta ao fim do dia.'],
 ];
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ld = {
+  '@type': 'AutoRepair', name: 'Auto Pistão Azul', url, telephone: '+351900000001',
+  address: { '@type': 'PostalAddress', streetAddress: 'Zona Industrial do Exemplo, Lote 3', postalCode: '4700-000', addressLocality: 'Braga', addressCountry: 'PT' },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '08:30', closes: '12:30' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '14:00', closes: '18:30' },{ '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '09:00', closes: '13:00' }],
+};
 ---
 <Base title="Auto Pistão Azul · Oficina de reparação automóvel" description="Demonstração de site para oficina: serviços com preço de partida, pedido de orçamento e horário, pensado primeiro para telemóvel." themeColor="#1e3a8a">
+  <JsonLd slot="head" data={ld} />
   <header class="hero">
     <div class="wrap">
       <p class="eyebrow">Mecânica geral · Todas as marcas</p>
@@ -70,7 +80,8 @@ const passos = [
     </section>
   </main>
 
-  <footer class="foot"><div class="wrap">© Auto Pistão Azul · marca fictícia criada para demonstração</div></footer>
+  <LegalFooter marca="Auto Pistão Azul" firma="Pistão Azul Reparações Auto, Lda." morada="Zona Industrial do Exemplo, Lote 3 · 4700-000 Braga" email="oficina@exemplo.pt" bg="#0f172a" fg="#e2e8f0"
+    ral={[{ nome: "CASA, Centro de Arbitragem do Setor Automóvel", url: "https://www.arbitragemauto.pt" }, { nome: "CIAB, Tribunal Arbitral de Consumo", url: "https://www.ciab.pt" }]} />
 </Base>
 
 <style>
@@ -93,5 +104,4 @@ const passos = [
   .n { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--c); color: #fff; display: grid; place-items: center; font-weight: 800; }
   .hours { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; margin: 0; }
   .hours dt { font-weight: 700; } .hours dd { margin: 0; }
-  .foot { background: #0f172a; color: #e2e8f0; padding: 1.5rem 0; font-size: .875rem; }
 </style>
