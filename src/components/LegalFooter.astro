@@ -11,7 +11,7 @@ const { marca, firma, morada, email, ral, extra, bg = '#111827', fg = '#f3f4f6' 
     <p>{morada} · {email}</p>
     {extra && <p>{extra}</p>}
     <p>
-      <a class="lr" href="https://www.livroreclamacoes.pt" rel="noopener">Livro de Reclamações Eletrónico</a>
+      <a class="lr" href="https://www.livroreclamacoes.pt/inicio" rel="noopener">Livro de Reclamações Eletrónico</a>
     </p>
     <p class="ral">Em caso de litígio de consumo, pode recorrer a:
       {ral.map((r, i) => <>{i > 0 && ' · '}<a href={r.url} rel="noopener">{r.nome}</a></>)}.
