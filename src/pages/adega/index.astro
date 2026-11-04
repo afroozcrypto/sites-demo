@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import LegalFooter from '../../components/LegalFooter.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import '@fontsource-variable/fraunces';
+// DEMO: negócio fictício. Montra sem loja: vinhos, visitas e contacto. Tudo são exemplos.
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ld = {
+  '@type': 'Winery', name: 'Adega Demo', url,
+  address: { '@type': 'PostalAddress', streetAddress: 'Estrada do Exemplo, 2', postalCode: '0000-000', addressLocality: 'Bairrada', addressCountry: 'PT' },
+};
+const vinhos = [
+  ['Espumante Demo', 'Espumante bruto', 'Castas e notas de prova de exemplo.'],
+  ['Tinto Demo', 'Tinto', 'Castas e notas de prova de exemplo.'],
+  ['Branco Demo', 'Branco', 'Castas e notas de prova de exemplo.'],
+];
+---
+<Base title="Adega Demo · Vinhos, visitas e provas (demonstração)" description="Demonstração de site para adega: vinhos, visitas com prova e contacto. Negócio fictício, sem loja online." themeColor="#4a1d3a">
+  <JsonLd slot="head" data={ld} />
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">DEMO · negócio fictício</p>
+      <h1>Adega Demo</h1>
+      <p class="lead">Vinhos da casa, visitas à adega e provas com marcação.</p>
+      <div class="ctas">
+        <a class="btn btn-main" href="#visitas">Marcar uma visita</a>
+        <a class="btn btn-alt" href="#vinhos">Ver os vinhos</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="vinhos">
+      <div class="wrap">
+        <h2>Os vinhos</h2>
+        <div class="grid grid-3">
+          {vinhos.map(([t, tipo, d], i) => (
+            <div class="card">
+              <div class={`bottle b${i}`} aria-hidden="true"></div>
+              <h3>{t}</h3><p class="tipo">{tipo}</p><p>{d}</p>
+            </div>
+          ))}
+        </div>
+        <p class="note">Para comprar, contacte a adega. Num site real, esta secção pode ligar a uma loja.</p>
+      </div>
+    </section>
+
+    <section id="visitas" class="alt">
+      <div class="wrap grid grid-2">
+        <div>
+          <h2>Visitas e provas</h2>
+          <p>Visita à adega com prova de três vinhos. Grupos com marcação. <span class="note">(formato e duração de exemplo)</span></p>
+          <a class="btn btn-main" href="#visitas">Marcar por email</a>
+          <p class="note">Num site real, este botão abre um email para a adega com a data por preencher.</p>
+        </div>
+        <div>
+          <h2>Horário</h2>
+          <dl class="hours">
+            <dt>Segunda a sábado</dt><dd>10h00–18h00 <span class="note">(exemplo)</span></dd>
+            <dt>Domingo</dt><dd>Só com marcação</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="wrap">
+        <h2>Onde estamos</h2>
+        <p>Estrada do Exemplo, 2 · Bairrada <span class="note">(morada fictícia)</span></p>
+        <p><strong>Telefone:</strong> 000 000 001 <span class="note">(número de exemplo)</span></p>
+        <p class="note">Não vendemos bebidas alcoólicas a menores de 18 anos.</p>
+      </div>
+    </section>
+  </main>
+
+  <LegalFooter marca="Adega Demo" firma="Adega Demo, Lda. (fictícia)" morada="Estrada do Exemplo, 2 · Bairrada" email="adega@exemplo.pt" bg="#2a0f22" fg="#fce7f3"
+    ral={[{ nome: "CNIACC, Centro Nacional de Informação e Arbitragem de Conflitos de Consumo", url: "https://www.cniacc.pt" }]} />
+</Base>
+
+<style>
+  :root { --c: #6b2149; }
+  .hero { background: linear-gradient(160deg, #1f0a18, #4a1d3a 60%, #6b2149); color: #fff; padding: 3.5rem 0 3rem; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; font-weight: 700; color: #fbcfe8; }
+  h1 { font-size: clamp(2.2rem, 8vw, 3.6rem); font-family: "Fraunces Variable", Georgia, serif; }
+  .lead { font-size: 1.15rem; max-width: 34rem; }
+  .ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .btn-main { background: #fde68a; color: #1f0a18; }
+  .btn-alt { border: 2px solid #fff; color: #fff; }
+  #visitas .btn-main { background: var(--c); color: #fff; }
+  h2 { color: var(--c); font-size: 1.8rem; }
+  .card { border: 1px solid #e5e7eb; border-radius: .75rem; padding: 1.25rem; }
+  .card h3 { font-size: 1.1rem; margin-top: .75rem; }
+  .tipo { font-weight: 700; color: var(--c); margin: 0 0 .5rem; }
+  .bottle { width: 34px; height: 96px; margin: 26px auto 0; border-radius: 10px 10px 6px 6px; position: relative; }
+  .bottle::before { content: ''; position: absolute; left: 11px; top: -22px; width: 12px; height: 26px; border-radius: 3px; background: inherit; }
+  .b0 { background: linear-gradient(#d9c28a, #b89b52); } .b1 { background: linear-gradient(#5b1530, #3a0d1f); } .b2 { background: linear-gradient(#d8d39a, #a8a35c); }
+  .alt { background: #fdf2f8; }
+  .hours { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; margin: 0; }
+  .hours dt { font-weight: 700; } .hours dd { margin: 0; }
+</style>
